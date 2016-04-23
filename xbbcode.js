@@ -222,7 +222,7 @@ var XBBCODE = (function() {
                 var myUrl = content;
 
                 urlPattern.lastIndex = relativePathPattern.lastIndex = 0;
-                if ( !urlPattern.test( myUrl ) && !relativePath.test(myUrl) ) {
+                if ( !urlPattern.test( myUrl ) && !relativePathPattern.test(myUrl) ) {
                     myUrl = "";
                 }
 
