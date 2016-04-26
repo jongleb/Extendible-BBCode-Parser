@@ -288,6 +288,16 @@ var XBBCODE = (function() {
             closeTag: function(params,content) {
                 return '</ul>';
             },
+            annotations: {
+                "=1": {
+                    openTag: function () {
+                        return "<ol>";
+                    },
+                    closeTag: function () {
+                        return "</ol>";
+                    }
+                }
+            },
             restrictChildrenTo: ["*", "li"]
         },
         "noparse": {
@@ -655,6 +665,13 @@ var XBBCODE = (function() {
         var processedContent = tags[tagName].noParse ? unprocess(tagContents) : tagContents.replace(bbRegExp, replaceFunct),
             openTag = tags[tagName].openTag(tagParams,processedContent),
             closeTag = tags[tagName].closeTag(tagParams,processedContent);
+
+	if (tags[tagName].hasOwnProperty('annotations')) {
+		if (tags[tagName].annotations.hasOwnProperty(tagParams)) {
+	        	openTag = tags[tagName].annotations[tagParams].openTag(tagParams, processedContent);
+	        	closeTag = tags[tagName].annotations[tagParams].closeTag(tagParams, processedContent);
+	        }
+	}
 
         if ( tags[tagName].displayContent === false) {
             processedContent = "";
